@@ -66,7 +66,7 @@ We suspect that group level effects are caused by environmental conditions that 
 means$locale <- "north america"  
 means$locale[means$lat < 10] <- "south pacific"
 means$locale[means$long > -80 & means$lat < 10] <- "south america"
-means$locale[means$long > -80 & means$lat > 10] <- "north atlantic"
+
 ```
 
 

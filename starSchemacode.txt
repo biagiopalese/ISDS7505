@@ -1,0 +1,164 @@
+/*CREATION OF THE TABLES OF THE STAR SCHEMA*/
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Schema student2
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema student2
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `student2` DEFAULT CHARACTER SET latin1 COLLATE latin1_general_cs ;
+USE `student2` ;
+
+-- -----------------------------------------------------
+-- Table `student2`.`customerDimensionEAYB`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `student2`.`customerDimensionEAYB` (
+  `customerNumber` INT(11) NOT NULL COMMENT '',
+  `customerName` VARCHAR(50) CHARACTER SET 'latin1' COLLATE 'latin1_general_cs' NOT NULL COMMENT '',
+  `contactLastName` VARCHAR(50) CHARACTER SET 'latin1' COLLATE 'latin1_general_cs' NOT NULL COMMENT '',
+  `contactFirstName` VARCHAR(50) CHARACTER SET 'latin1' COLLATE 'latin1_general_cs' NOT NULL COMMENT '',
+  `phone` VARCHAR(50) CHARACTER SET 'latin1' COLLATE 'latin1_general_cs' NOT NULL COMMENT '',
+  `addressLine1` VARCHAR(50) CHARACTER SET 'latin1' COLLATE 'latin1_general_cs' NOT NULL COMMENT '',
+  `addressLine2` VARCHAR(50) CHARACTER SET 'latin1' COLLATE 'latin1_general_cs' NULL DEFAULT NULL COMMENT '',
+  `city` VARCHAR(50) CHARACTER SET 'latin1' COLLATE 'latin1_general_cs' NOT NULL COMMENT '',
+  `state` VARCHAR(50) CHARACTER SET 'latin1' COLLATE 'latin1_general_cs' NULL DEFAULT NULL COMMENT '',
+  `postalCode` VARCHAR(15) CHARACTER SET 'latin1' COLLATE 'latin1_general_cs' NULL DEFAULT NULL COMMENT '',
+  `country` VARCHAR(50) CHARACTER SET 'latin1' COLLATE 'latin1_general_cs' NOT NULL COMMENT '',
+  `salesRepEmployeeNumber` INT(11) NULL DEFAULT NULL COMMENT '',
+  `creditLimit` DOUBLE NULL DEFAULT NULL COMMENT '',
+  `customerLocation` POINT NULL DEFAULT NULL COMMENT '',
+  `checkNumber` VARCHAR(50) CHARACTER SET 'latin1' COLLATE 'latin1_general_cs' NOT NULL COMMENT '',
+  `amount` DOUBLE NOT NULL COMMENT '',
+  `customerDimensionID` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  PRIMARY KEY (`customerDimensionID`)  COMMENT '')
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_general_cs;
+
+
+-- -----------------------------------------------------
+-- Table `student2`.`employeeDimensionEAYB`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `student2`.`employeeDimensionEAYB` (
+  `employeeNumber` INT(11) NOT NULL COMMENT '',
+  `lastName` VARCHAR(50) CHARACTER SET 'latin1' COLLATE 'latin1_general_cs' NOT NULL COMMENT '',
+  `firstName` VARCHAR(50) CHARACTER SET 'latin1' COLLATE 'latin1_general_cs' NOT NULL COMMENT '',
+  `extension` VARCHAR(10) CHARACTER SET 'latin1' COLLATE 'latin1_general_cs' NOT NULL COMMENT '',
+  `email` VARCHAR(100) CHARACTER SET 'latin1' COLLATE 'latin1_general_cs' NOT NULL COMMENT '',
+  `reportsTo` INT(11) NULL DEFAULT NULL COMMENT '',
+  `jobTitle` VARCHAR(50) CHARACTER SET 'latin1' COLLATE 'latin1_general_cs' NOT NULL COMMENT '',
+  `officeCode` VARCHAR(10) CHARACTER SET 'latin1' COLLATE 'latin1_general_cs' NOT NULL COMMENT '',
+  `city` VARCHAR(50) CHARACTER SET 'latin1' COLLATE 'latin1_general_cs' NOT NULL COMMENT '',
+  `addressLine1` VARCHAR(50) CHARACTER SET 'latin1' COLLATE 'latin1_general_cs' NOT NULL COMMENT '',
+  `addressLine2` VARCHAR(50) CHARACTER SET 'latin1' COLLATE 'latin1_general_cs' NULL DEFAULT NULL COMMENT '',
+  `state` VARCHAR(50) CHARACTER SET 'latin1' COLLATE 'latin1_general_cs' NULL DEFAULT NULL COMMENT '',
+  `country` VARCHAR(50) CHARACTER SET 'latin1' COLLATE 'latin1_general_cs' NOT NULL COMMENT '',
+  `postalCode` VARCHAR(15) CHARACTER SET 'latin1' COLLATE 'latin1_general_cs' NOT NULL COMMENT '',
+  `territory` VARCHAR(10) CHARACTER SET 'latin1' COLLATE 'latin1_general_cs' NOT NULL COMMENT '',
+  `officeLocation` POINT NULL DEFAULT NULL COMMENT '',
+  PRIMARY KEY (`employeeNumber`)  COMMENT '')
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_general_cs;
+
+
+-- -----------------------------------------------------
+-- Table `student2`.`productDimensionEAYB`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `student2`.`productDimensionEAYB` (
+  `productCode` VARCHAR(15) CHARACTER SET 'latin1' COLLATE 'latin1_general_cs' NOT NULL COMMENT '',
+  `productName` VARCHAR(70) CHARACTER SET 'latin1' COLLATE 'latin1_general_cs' NOT NULL COMMENT '',
+  `productScale` VARCHAR(10) CHARACTER SET 'latin1' COLLATE 'latin1_general_cs' NOT NULL COMMENT '',
+  `productVendor` VARCHAR(50) CHARACTER SET 'latin1' COLLATE 'latin1_general_cs' NOT NULL COMMENT '',
+  `productDescription` TEXT CHARACTER SET 'latin1' COLLATE 'latin1_general_cs' NOT NULL COMMENT '',
+  `quantityInStock` SMALLINT(6) NOT NULL COMMENT '',
+  `buyPrice` DOUBLE NOT NULL COMMENT '',
+  `MSRP` DOUBLE NOT NULL COMMENT '',
+  `productLine` VARCHAR(50) CHARACTER SET 'latin1' COLLATE 'latin1_general_cs' NOT NULL COMMENT '',
+  `textDescription` VARCHAR(4000) CHARACTER SET 'latin1' COLLATE 'latin1_general_cs' NULL DEFAULT NULL COMMENT '',
+  PRIMARY KEY (`productCode`)  COMMENT '')
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_general_cs;
+
+
+-- -----------------------------------------------------
+-- Table `student2`.`dateDimensionEAYB`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `student2`.`dateDimensionEAYB` (
+  `dateID` INT NOT NULL COMMENT '',
+  `paymentDate` DATETIME NOT NULL COMMENT '',
+  `orderDate` DATETIME NOT NULL COMMENT '',
+  `requiredDate` DATETIME NOT NULL COMMENT '',
+  `shippedDate` DATETIME NULL DEFAULT NULL COMMENT '',
+  PRIMARY KEY (`dateID`)  COMMENT '')
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `student2`.`orderFact-EAYB`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `student2`.`orderFact-EAYB` (
+  `orderNumber` INT(11) NOT NULL COMMENT '',
+  `productCode` VARCHAR(15) CHARACTER SET 'latin1' COLLATE 'latin1_general_cs' NOT NULL COMMENT '',
+  `employeeNumber` INT(11) NOT NULL COMMENT '',
+  `status` VARCHAR(15) CHARACTER SET 'latin1' COLLATE 'latin1_general_cs' NOT NULL COMMENT '',
+  `comments` TEXT CHARACTER SET 'latin1' COLLATE 'latin1_general_cs' NULL DEFAULT NULL COMMENT '',
+  `quantityOrdered` INT(11) NOT NULL COMMENT '',
+  `priceEach` DOUBLE NOT NULL COMMENT '',
+  `orderLineNumber` SMALLINT(6) NOT NULL COMMENT '',
+  `dateID` INT NOT NULL COMMENT '',
+  `customerDimensionID` INT NOT NULL COMMENT '',
+  PRIMARY KEY (`productCode`, `employeeNumber`, `orderNumber`, `dateID`, `customerDimensionID`)  COMMENT '',
+  INDEX `fk_sale/transactioFact_productsDimension1_idx` (`productCode` ASC)  COMMENT '',
+  INDEX `fk_sale/transactioFact_employeeDimension1_idx` (`employeeNumber` ASC)  COMMENT '',
+  INDEX `fk_orderFact_dateDimension1_idx` (`dateID` ASC)  COMMENT '',
+  INDEX `fk_orderFact-EAYB_customerDimensionEAYB1_idx` (`customerDimensionID` ASC)  COMMENT '',
+  CONSTRAINT `fk_sale/transactioFact_productsDimension1`
+    FOREIGN KEY (`productCode`)
+    REFERENCES `student2`.`productDimensionEAYB` (`productCode`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_sale/transactioFact_employeeDimension1`
+    FOREIGN KEY (`employeeNumber`)
+    REFERENCES `student2`.`employeeDimensionEAYB` (`employeeNumber`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_orderFact_dateDimension1`
+    FOREIGN KEY (`dateID`)
+    REFERENCES `student2`.`dateDimensionEAYB` (`dateID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_orderFact-EAYB_customerDimensionEAYB1`
+    FOREIGN KEY (`customerDimensionID`)
+    REFERENCES `student2`.`customerDimensionEAYB` (`customerDimensionID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+
+
+
+
+
+
+/*CREATION OF THE CUSTOMER DIMENSION TABLE*/
+INSERT INTO student2.customerdimensioneayb
+SELECT classicmodels.customers.customerNumber,customerName,contactLastName,contactFirstName,phone,addressLine1,addressLine2,city,state,postalCode,country,salesRepEmployeeNumber,creditLimit,customerLocation, classicmodels.payments.checkNumber, classicmodels.payments.amount,@dummy
+FROM classicmodels.customers JOIN classicmodels.payments
+USING (customerNumber);
